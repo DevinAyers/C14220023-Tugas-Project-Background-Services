@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
                 REQUEST_CODE_PERMISSIONS
             )
         }
+        handleIntent(intent)
     }
     private val permissionToRequest = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         arrayOf(
@@ -91,5 +92,4 @@ class MainActivity : AppCompatActivity() {
             handleIntent(it)
         }
     }
-
 }
