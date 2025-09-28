@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         const val REQUEST_CODE_PERMISSIONS = 101
     }
 
+    private lateinit var _statusTextView: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -52,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    val _statusTextView = findViewById<TextView>(R.id.statusTextView)
+//    val _statusTextView = findViewById<TextView>(R.id.statusTextView)
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
