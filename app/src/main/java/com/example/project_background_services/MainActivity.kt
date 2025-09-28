@@ -1,9 +1,11 @@
 package com.example.project_background_services
 
 import android.Manifest
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -49,5 +51,45 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
+    val _statusTextView = findViewById<TextView>(R.id.statusTextView)
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_CODE_PERMISSIONS) {
+            var allPermissionGranted = true
+            for (result in grantResults) {
+                if (result != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                    allPermissionGranted = false
+                    break
+                }
+            }
+
+            if (allPermissionGranted) {
+                val serviceIntent = Intent(this, TrackerService::class.java)
+                startService(serviceIntent)
+                finish()
+            } else {
+                _statusTextView.text = "izin diperlukan untuk menjalankan layanan"
+            }
+        }
+    }
+
+    private fun handleIntent(intent: Intent) {
+        if (intent.action == ACTION_SERVICE_STOPPED_JUMP) {
+            _statusTextView.text = "Background services sudah berhenti karena Anda melompat"
+        } else {
+        }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        intent.let {
+            handleIntent(it)
+        }
+    }
 
 }
